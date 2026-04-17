@@ -97,77 +97,86 @@
 
   <script src="inflacion.js"></script>
   <script>
-    let valoresBase = {
-      adultos: 121504.93,
-      jovenes: 110459.03,
-      ninos: 60752.46
-    };
+    document.addEventListener("DOMContentLoaded", function () {
 
-    let clavesOrdenadas = Object.keys(inflaciones).sort((a, b) => {
-      let [mesA, anioA] = a.split("-");
-      let [mesB, anioB] = b.split("-");
-      return new Date(anioA, mesA - 1) - new Date(anioB, mesB - 1);
-    });
+      let valoresBase = {
+        adultos: 121504.93,
+        jovenes: 110459.03,
+        ninos: 60752.46
+      };
 
-    let factor = 1;
-    clavesOrdenadas.forEach(k => {
-      factor *= (1 + inflaciones[k] / 100);
-    });
+      if (typeof inflaciones === "undefined") {
+        console.error("inflacion.js no cargó");
+        return;
+      }
 
-    function formatearMes(clave) {
-      let [mes, anio] = clave.split("-");
-      const nombresMeses = [
-        "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-        "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
-      ];
-      return nombresMeses[parseInt(mes) - 1] + " " + anio;
-    }
-
-    let ultimoMes = clavesOrdenadas.length > 0
-      ? formatearMes(clavesOrdenadas[clavesOrdenadas.length - 1])
-      : "Inicio";
-
-    // 🔥 Redondeo
-    function redondear(valor) {
-      return Math.ceil(valor);
-      // return Math.ceil(valor / 1000) * 1000; // opcional a miles
-    }
-
-    function formatear(valor) {
-      return valor.toLocaleString('es-AR', {
-        style: 'currency',
-        currency: 'ARS',
-        minimumFractionDigits: 0
+      let clavesOrdenadas = Object.keys(inflaciones).sort((a, b) => {
+        let [mesA, anioA] = a.split("-");
+        let [mesB, anioB] = b.split("-");
+        return new Date(anioA, mesA - 1) - new Date(anioB, mesB - 1);
       });
-    }
 
-    let adultos = formatear(redondear(valoresBase.adultos * factor));
-    let jovenes = formatear(redondear(valoresBase.jovenes * factor));
-    let ninos = formatear(redondear(valoresBase.ninos * factor));
+      let factor = 1;
+      clavesOrdenadas.forEach(k => {
+        factor *= (1 + Number(inflaciones[k]) / 100);
+      });
 
-    document.getElementById("precios").innerHTML = `
-      <div class="titulo">VALORES DE TARJETAS</div>
+      function formatearMes(clave) {
+        let [mes, anio] = clave.split("-");
+        const nombresMeses = [
+          "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+          "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+        ];
+        return nombresMeses[parseInt(mes) - 1] + " " + anio;
+      }
 
-      <div class="fila">
-        <div class="label">👤 ADULTOS</div>
-        <div class="valor">${adultos}</div>
-      </div>
+      let ultimoMes = clavesOrdenadas.length > 0
+        ? formatearMes(clavesOrdenadas[clavesOrdenadas.length - 1])
+        : "Inicio";
 
-      <div class="fila">
-        <div class="label">🧑 JÓVENES (11 a 15 años)</div>
-        <div class="valor">${jovenes}</div>
-      </div>
+      function redondear(valor) {
+        return Math.ceil(valor);
+      }
 
-      <div class="fila">
-        <div class="label">👶 NIÑOS (3 a 10 años)</div>
-        <div class="valor">${ninos}</div>
-      </div>
-    `;
+      function formatear(valor) {
+        return valor.toLocaleString('es-AR', {
+          style: 'currency',
+          currency: 'ARS',
+          minimumFractionDigits: 0
+        });
+      }
 
-    const fecha = new Date();
-    const opciones = { day: '2-digit', month: '2-digit', year: 'numeric' };
-    document.getElementById("fecha").innerText =
-      "*Valores actualizados a la fecha por IPC "+ fecha.toLocaleDateString('es-AR', opciones);
+      let adultos = formatear(redondear(valoresBase.adultos * factor));
+      let jovenes = formatear(redondear(valoresBase.jovenes * factor));
+      let ninos = formatear(redondear(valoresBase.ninos * factor));
+
+      document.getElementById("precios").innerHTML = `
+        <div class="titulo">VALORES DE TARJETAS</div>
+
+        <div class="fila">
+          <div class="label">👤 ADULTOS</div>
+          <div class="valor">${adultos}</div>
+        </div>
+
+        <div class="fila">
+          <div class="label">🧑 JÓVENES (11 a 15 años)</div>
+          <div class="valor">${jovenes}</div>
+        </div>
+
+        <div class="fila">
+          <div class="label">👶 NIÑOS (3 a 10 años)</div>
+          <div class="valor">${ninos}</div>
+        </div>
+      `;
+
+      const fecha = new Date();
+      const opciones = { day: '2-digit', month: '2-digit', year: 'numeric' };
+
+      document.getElementById("fecha").innerText =
+        "*Valores actualizados a la fecha por IPC " +
+        fecha.toLocaleDateString('es-AR', opciones);
+
+    });
   </script>
 
 </body>
