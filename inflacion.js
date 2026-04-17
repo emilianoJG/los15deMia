@@ -1,3 +1,4 @@
-const inflaciones = [
-  { mes: "Abril", valor: 3.4 },
-];
+const inflaciones = {
+  "04-2026": 3.4,
+  "05-2026": 2.1
+};
