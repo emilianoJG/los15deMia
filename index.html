@@ -1,9 +1,100 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
+
 <head>
+  <meta charset="UTF-8">
   <title>Los 15 de Mia</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .card {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      max-width: 400px;
+      width: 90%;
+    }
+
+    .fecha {
+      font-size: 18px;
+      color: gray;
+      margin-top: 20px;
+    }
+
+    .precio {
+      font-size: 24px;
+      font-weight: bold;
+      margin: 20px 0;
+    }
+
+    .datos {
+      margin-top: 20px;
+      font-size: 16px;
+    }
+
+    .datos strong {
+      display: block;
+      margin-top: 5px;
+    }
+  </style>
 </head>
+
 <body>
-  <h1>Bienvenidos 🎉</h1>
+
+  <div class="card">
+    <div class="precio" id="precio"></div>
+
+    <div class="datos">
+      CUENTA BANCARIA PARA TRANSFERENCIA:
+      <strong>ALIAS:</strong> XXXXX
+      <strong>NOMBRE:</strong> EMILIANO GARCIA
+    </div>
+
+    <div class="fecha" id="fecha"></div>
+  </div>
+  
+
+  <script src="inflacion.js"></script>
+  <script>
+    let valor = 108000;
+    inflaciones.forEach(i => {
+      valor *= (1 + i.valor / 100);
+    });
+    let ultimoMes = inflaciones.length > 0
+      ? inflaciones[inflaciones.length - 1].mes
+      : "Inicio";
+
+    let valorRedondeado = Math.ceil(valor);
+    //OPCION DE REDONDEO POR MIL
+    //let valorRedondeado = Math.ceil(valor / 1000) * 1000;
+
+    let valorFormateado = valorRedondeado.toLocaleString('es-AR', {
+      style: 'currency',
+      currency: 'ARS',
+      minimumFractionDigits: 0
+    });
+
+    document.getElementById("precio").innerHTML =
+      "VALOR DE LA TARJETA<br>" + valorFormateado;
+
+    const fecha = new Date();
+    const opciones = { day: '2-digit', month: '2-digit', year: 'numeric' };
+    document.getElementById("fecha").innerText =
+      "Datos actualizados por IPC a la fecha " +
+      fecha.toLocaleDateString('es-AR', opciones);
+  </script>
+
 </body>
+
 </html>
