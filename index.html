@@ -84,13 +84,6 @@
 
   <div class="card">
     <div class="precios" id="precios"></div>
-
-    <div class="datos">
-      CUENTA BANCARIA PARA TRANSFERENCIA:
-      <strong>ALIAS:</strong> XXXXX
-      <strong>NOMBRE:</strong> EMILIANO GARCIA
-    </div>
-
     <div class="fecha" id="fecha"></div>
   </div>
 
@@ -118,18 +111,16 @@ document.addEventListener("DOMContentLoaded", function () {
       <div class="titulo">🎁 REGALO</div>
 
       <div class="fila">
-        <div class="label">Alias</div>
-        <div class="valor">XXXXX</div>
+        <div class="label">MERCADO PAGO</div>
+        <div class="label">Alias:</div>
+        <div class="valor">mia.luna45</div>
       </div>
 
       <div class="fila">
-        <div class="label">Nombre</div>
-        <div class="valor">EMILIANO GARCIA</div>
+        <div class="label">Nombre:</div>
+        <div class="valor">MIA LUNA MELGAREJO VOLTA</div>
       </div>
-    `;
-
-    document.getElementById("fecha").innerText =
-      "Podés transferir el monto que desees 🎉";
+    `;  
   }
 
   // =========================
@@ -192,11 +183,23 @@ document.addEventListener("DOMContentLoaded", function () {
         <div class="label">👶 NIÑOS (3 a 10 años)</div>
         <div class="valor">${ninos}</div>
       </div>
-    `;
 
+      <div class="titulo">CUENTA BANCARA PARA TRANSFERIR:</div>
+
+      <div class="fila">
+        <div class="label">MERCADO PAGO</div>
+        <div class="label">Alias:</div>
+        <div class="valor">cesarm.15mp</div>
+      </div>
+
+       <div class="fila">
+        <div class="label">Nombre:</div>
+        <div class="valor">CESAR MELGAREJO</div>
+      </div>
+
+    `;
     const fecha = new Date();
     const opciones = { day: '2-digit', month: '2-digit', year: 'numeric' };
-
     document.getElementById("fecha").innerText =
       "*Valores actualizados a la fecha por IPC " +
       fecha.toLocaleDateString('es-AR', opciones);
